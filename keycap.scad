@@ -1,16 +1,26 @@
 $fn = 100;
 
-module mountingCross(barWidth, height)
+module mountingCross(width, length, barWidth, height)
 {
     diameter = 6;
-    barLength = 4.2;
+    barLength = 4.3;
     
+    rotate(90)
     difference()
     {
-        cylinder(d = diameter, h = height);
+        //cylinder(d = diameter, h = height);
+        union()
+        {
+            //cylinder(d = diameter, h = height);
+            translate(- [width / 2, length / 2, 0])
+            cube([width, length, height], centered=true);
+            translate([0,-50,0])
+            cube([0.5, 100, 2 * height / 3]);
+        }
 
         translate([-barWidth / 2, -barLength / 2, 0])
         cube([barWidth, barLength, height]);
+        
         
         rotate(90)
         {
@@ -91,14 +101,15 @@ module keycap()
 {
     width = 18;
     length = 18;
-    height = 12;
+    //height = 12;
+    height = 10;
     topWidth = 12;
     topLength = 12;
 
     thickness = 1;
     supportHeight = 4;
 
-    crossStartHeight = 1.0;
+    crossStartHeight = 0;
 
     intersection()
     {
@@ -140,4 +151,4 @@ module keycap()
 crossWidth = 1.4;
 
 keycap()
-mountingCross(crossWidth, 10);
+mountingCross(4, 5.5, crossWidth, 10);
