@@ -8,7 +8,7 @@ L_SHIFT_WIDTH = 17 + 6;
 CTRL_WIDTH = 22 + 6;
 ALT_WIDTH = 22+6;
 R_SHIFT_WIDTH = 46+6;
-SPACE_WDITH = 118 + 6;
+SPACE_WIDTH = 108 + 6;
 ENTER_WIDTH = 36 + 6;
 BACKSPACE_WIDTH = 31 + 6;
 BACKSLASH_WIDTH = 22 + 6;
@@ -21,7 +21,7 @@ KEY_ROWS = [
         [TAB_WIDTH, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, TAB_WIDTH], #TAB row
         [CAPS_WIDTH, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, ENTER_WIDTH], #Caps row
         [L_SHIFT_WIDTH, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, SW, R_SHIFT_WIDTH], #Shift row
-        [], #Ctrl row TODO: ADD
+        [CTRL_WIDTH, SW, ALT_WIDTH, SPACE_WIDTH, ALT_WIDTH, SW, SW], #Ctrl row TODO: ADD
     ];
 
 
