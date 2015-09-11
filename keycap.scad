@@ -41,8 +41,10 @@ module stabilizerMounts(size, holeSize, interDistance, startHeight)
         difference()
         {
             cube(size);
-            translate([size[0] / 2 - holeSize [0] / 2, size[1] / 2 - holeSize[1] / 2, 0])
+            translate([size[0] / 2 - holeSize[0] / 2, size[1] / 2 - holeSize[1] / 2, 0])
             cube([holeSize[0], holeSize[1], size[2]]);
+            //rotate(90)
+            //children(0);
         }
     }
 }
@@ -179,13 +181,13 @@ STD_INNER_SIZE = [12, 12];
 STD_OUTER_SIZE = [18, 18];
 STD_INNER_SIZE = [12, 12];
 
-R_SHIFT_OUTER = [STD_OUTER_SIZE[0], STD_OUTER_SIZE[1] * 2.75];
-R_SHIFT_INNER = [STD_INNER_SIZE[0], STD_INNER_SIZE[1] * 2.75];
+R_SHIFT_OUTER = [STD_OUTER_SIZE[0], STD_OUTER_SIZE[1] * 5.75];
+R_SHIFT_INNER = [STD_INNER_SIZE[0], STD_INNER_SIZE[1] * 5.75];
 
 ST_MOUNT_OUTERSIZE = [10,5,100];
 ST_MOUNT_HOLE_SIZE = [7,1];
-ST_INTER_DISTANCE = 15;
-ST_START_HEIGHT = 2;
+ST_INTER_DISTANCE = 30;
+ST_START_HEIGHT = 3;
 
 //keycap(STD_OUTER_SIZE, STD_INNER_SIZE, roundTop = true)
 //mountingCross(4, 5.5, crossWidth, 10, useSupport = true)
@@ -197,4 +199,5 @@ union()
     rotate(90)
     mountingCross(4, 5.5, crossWidth, 10, useSupport = false);
     stabilizerMounts(ST_MOUNT_OUTERSIZE, ST_MOUNT_HOLE_SIZE, ST_INTER_DISTANCE, ST_START_HEIGHT);
+    //mountingCross(4, 5.5, crossWidth, 10, useSupport = false);
 }
