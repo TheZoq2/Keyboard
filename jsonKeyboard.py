@@ -1,7 +1,6 @@
 import scadGenerator as SCAD
 import json
 
-STD_SIZE = 18;
 
 jsonFile = open("layout.json", "r");
 

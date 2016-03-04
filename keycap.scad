@@ -3,7 +3,7 @@ $fn = 100;
 module mountingCross(width, length, barWidth, height, useSupport = false)
 {
     diameter = 6;
-    barLength = 4.3;
+    barLength = 4.7;
     
     rotate(90)
     difference()
@@ -156,6 +156,7 @@ module keycap(outerSize, topSize, roundTop = true, useSupport = true)
             //cube([4, 4, height]);
             translate([width / 2, length / 2, crossStartHeight])
             {
+                rotate(90)
                 children(0);
             }
 
@@ -169,11 +170,10 @@ module keycap(outerSize, topSize, roundTop = true, useSupport = true)
             }
         }
     }
-
 }
 
 
-crossWidth = 1.4;
+crossWidth = 1.5;
 
 STD_OUTER_SIZE = [18, 18];
 STD_INNER_SIZE = [12, 12];
@@ -181,23 +181,34 @@ STD_INNER_SIZE = [12, 12];
 STD_OUTER_SIZE = [18, 18];
 STD_INNER_SIZE = [12, 12];
 
-R_SHIFT_OUTER = [STD_OUTER_SIZE[0], STD_OUTER_SIZE[1] * 5.75];
-R_SHIFT_INNER = [STD_INNER_SIZE[0], STD_INNER_SIZE[1] * 5.75];
+R_SHIFT_OUTER = [STD_OUTER_SIZE[0], STD_OUTER_SIZE[1]];
+R_SHIFT_INNER = [STD_INNER_SIZE[0], STD_INNER_SIZE[1]];
+
+MOUNT_OUTER_SIZE = [4.3, 5.8, 8]; //Does not affect the keycaps for now
+MOUNT_CAP_SIZE = [4.3, 5.8, 3];
 
 ST_MOUNT_OUTERSIZE = [10,5,100];
 ST_MOUNT_HOLE_SIZE = [7,1];
-ST_INTER_DISTANCE = 30;
+ST_INTER_DISTANCE = 14;
 ST_START_HEIGHT = 3;
 
-//keycap(STD_OUTER_SIZE, STD_INNER_SIZE, roundTop = true)
-//mountingCross(4, 5.5, crossWidth, 10, useSupport = true)
-//cube([0,0,0]);
+keycap(STD_OUTER_SIZE, STD_INNER_SIZE, roundTop = true, useSupport = true)
+mountingCross(MOUNT_OUTER_SIZE[0], MOUNT_OUTER_SIZE[1], 1.6, MOUNT_OUTER_SIZE[2], useSupport = false)
+cube([0,0,0]);
 
-keycap(R_SHIFT_OUTER, R_SHIFT_INNER, roundTop = false, useSupport = false)
-union()
-{
-    rotate(90)
-    mountingCross(4, 5.5, crossWidth, 10, useSupport = false);
-    stabilizerMounts(ST_MOUNT_OUTERSIZE, ST_MOUNT_HOLE_SIZE, ST_INTER_DISTANCE, ST_START_HEIGHT);
-    //mountingCross(4, 5.5, crossWidth, 10, useSupport = false);
-}
+//keycap(R_SHIFT_OUTER, R_SHIFT_INNER, roundTop = false, useSupport = true)
+//union()
+//{
+//    rotate(90)
+//    mountingCross(4, 5.5, crossWidth, 10, useSupport = false)
+//    stabilizerMounts(ST_MOUNT_OUTERSIZE, ST_MOUNT_HOLE_SIZE, ST_INTER_DISTANCE, ST_START_HEIGHT);
+//    //mountingCross(4, 5.5, crossWidth, 10, useSupport = false);
+//}
+
+
+//mountingCross(MOUNT_OUTER_SIZE[0], MOUNT_OUTER_SIZE[1], 1.6, MOUNT_OUTER_SIZE[2], useSupport = false);
+//rotate(-90)
+//translate([-MOUNT_CAP_SIZE[0] / 2, -MOUNT_CAP_SIZE[1] / 2, MOUNT_OUTER_SIZE[2] - MOUNT_CAP_SIZE[2]])
+//{
+//    cube(MOUNT_CAP_SIZE);
+//}
