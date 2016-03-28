@@ -4,7 +4,7 @@ This repo contains all the openSCAD and python scripts that I used to create a 3
 Other than the components here, you need around 70 cherry style mechanical switches, 70 diodes and 
 a teensy or other microcntroller that can act as a USB keyboard. You also need a frame which I 
 chose to make out of wood. You can find lots of pictures of the build process and the final result
-[here](https://imgur.com/a/YUzv4)
+[here](https://imgur.com/a/YUzv4).
 
 
 
