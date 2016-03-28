@@ -3,7 +3,10 @@
 This repo contains all the openSCAD and python scripts that I used to create a 3d printed keyboard. 
 Other than the components here, you need around 70 cherry style mechanical switches, 70 diodes and 
 a teensy or other microcntroller that can act as a USB keyboard. You also need a frame which I 
-chose to make out of wood.
+chose to make out of wood. You can find lots of pictures of the build process and the final result
+[here](https://imgur.com/a/YUzv4)
+
+
 
 ## Generating a layout
 If you want a custom layout on your keyboard, you will need to generate it from a layout file exported from 
@@ -27,6 +30,13 @@ modelling program and round the corners yourself because it's tricky to do in sc
 you can use the keycapRounded.stl file in this repo. 
 
 I was able to print all the keycaps facing up and I printed it with a 0.35mm nozzle using a velleman k8400.
+
+##Firmware
+In order to use the keyboard you will need some sort of controller that talks to the PC. I decided 
+to use a teensy 3.1 which I programmed to act as a keyboard. The code for the firmware that I wrote
+can be found [here](https://github.com/TheZoq2/KeyboardFirmware). However, you should be able to use any 
+microcontroller you like, assuming it can function as a HID device. 
+
 
 ## Other repos
 [PyScad](https://github.com/TheZoq2/py-scad) -- My own script for generating openSCAD models in python.
