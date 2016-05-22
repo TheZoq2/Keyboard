@@ -17,7 +17,7 @@ Next you will need to download my pyScad python script for generating openSCAD m
 jsonKeyboard.py script in this repository. Run jsonKeyboard and it will print the openSCAD code
 for the layout to stdout. Save that code to a file, on unix you can use
 ```
-  python3 keyboard.py > outputFile.scad
+  python3 jsonKeyboard.py > outputFile.scad
 ```
 
 Finally, open keyboard.scad in openSCAD and replace the include statement at the top with the filename of 
