@@ -11,23 +11,26 @@ HOLE_SIZE = SWITCH_SIZE + [PADDING * 2, PADDING * 2];
 PLATE_HEIGHT = 1.6;
 
 
-MOUNT_LENGTH = 6;
+MOUNT_LENGTH = 3;
 MOUNT_WIDTH = 8;
 MOUNT_HEIGHT = 5;
 
-STABILIZER_DISTANCE = 15;
+STABILIZER_DISTANCE = 14;
 
 difference()
 {
-    cube([25,40,PLATE_HEIGHT]);
-    translate([20/2,40/2,-1])
+    cube([25,50,PLATE_HEIGHT]);
+    translate([20/2,50/2,-1])
     {
         switchHole(HOLE_SIZE, 2 + 2);
 
-        for(i = [-STABILIZER_DISTANCE, STABILIZER_DISTANCE])
+        for(i = [-1, 1])
         {
-            translate([-MOUNT_WIDTH / 2 + 15/2,i - MOUNT_LENGTH / 2,0])
+            //translate([-MOUNT_WIDTH / 2 + 6/2,i - MOUNT_LENGTH / 2,0])
+            //cube([MOUNT_WIDTH + PADDING * 2, MOUNT_LENGTH + PADDING * 2, MOUNT_HEIGHT]);
+            translate([0, i * STABILIZER_DISTANCE - MOUNT_LENGTH / 2, 0])
             cube([MOUNT_WIDTH + PADDING * 2, MOUNT_LENGTH + PADDING * 2, MOUNT_HEIGHT]);
+            //switchHole(HOLE_SIZE, 2 + 2);
         }
     }
 }
