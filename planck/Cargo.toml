@@ -1,0 +1,8 @@
+[package]
+name = "planck"
+version = "0.1.0"
+authors = ["Frans Skarman <frans.skarman@gmail.com>"]
+
+[dependencies]
+scad_generator = {git = "https://github.com/TheZoq2/Rust-Scad.git"}
+nalgebra = "*"
