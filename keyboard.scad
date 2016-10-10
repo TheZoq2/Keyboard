@@ -1,4 +1,4 @@
-use <layout.scad>
+use <ergo.scad>
 
 $fn=30;
 
@@ -14,6 +14,7 @@ module switchHole()
     outerSize = [outerWidth, outerWidth, outerHeight];
 
     
+    translate([outerWidth / 2, outerWidth / 2, 0])
     union()
     {
         translate(-[innerWidth / 2, innerWidth / 2, 0])
@@ -164,4 +165,14 @@ module part3()
 
 //part1();
 //part2();
-part3();
+//part3();
+
+HEIGHT = 4;
+
+difference()
+{
+    cube([130,130, HEIGHT]);
+    switchHoles()
+    switchHole();
+}
+

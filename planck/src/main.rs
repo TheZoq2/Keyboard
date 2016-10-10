@@ -1,9 +1,11 @@
 //"Import" the module along with the macros
 #[macro_use]
 extern crate scad_generator;
+extern crate scad_util as su;
 
 //Avoid having to write scad_generator:: everywhere
 use scad_generator::*;
+use su::electronics;
 
 qstruct!(Keyboard(rows: i32, cols: i32)
 {
@@ -12,11 +14,18 @@ qstruct!(Keyboard(rows: i32, cols: i32)
     grid_spacing: f32 = 18.5,
     top_thickness: f32 = 1.5,
     side_thickness: f32 = 3.0,
+    inner_height: f32 = 12.,
 });
+
+enum Side
+{
+    LEFT,
+    RIGHT
+}
 
 impl Keyboard 
 {
-    pub fn get_main(&self) -> ScadObject
+    pub fn get_main(&self, magnet_side: Side) -> ScadObject
     {
         let grid = 
         {
@@ -28,9 +37,17 @@ impl Keyboard
             })
         };
 
+        let teensy = {
+            let offset_x = self.rows as f32 - 2.;
+            let offset_y = 1.;
+            scad!(Translate(vec3(self.grid_spacing * offset_x, -offset_y, 0.)); electronics::teensy_lc())
+        };
+
         scad!(Difference;{
             self.get_frame(),
-            grid
+            grid,
+            teensy,
+            self.get_magnets(magnet_side)
         })
     }
 
@@ -118,7 +135,49 @@ impl Keyboard
 
     fn total_height(&self) -> f32
     {
-        self.top_thickness + 10.
+        self.top_thickness + self.inner_height
+    }
+
+    fn get_magnets(&self, side: Side) -> ScadObject
+    {
+        let diameter = 5.8;
+        let height = 2.2;
+        let bottom_offset = diameter;
+        
+        let magnet = 
+        {
+            let cylinder = scad!(Cylinder(height, Diameter(diameter)));
+
+            let rotated = scad!(Rotate(90., vec3(0., 1., 0.)); cylinder);
+
+            scad!(Translate(vec3(0., 0., bottom_offset)); rotated)
+        };
+
+        let duplicated = 
+        {
+            let first = scad!(Translate(vec3(0., self.grid_spacing / 2., 0.)); magnet.clone());
+            let second = scad!(Translate(vec3(0., self.grid_spacing * (self.cols as f32 - 0.5), 0.)); magnet.clone());
+
+            scad!(Union;
+            {
+                first,
+                second
+            })
+        };
+
+
+        let mut result = match side
+        {
+            Side::LEFT => {
+                scad!(Translate(vec3(-height, 0., 0.)); duplicated)
+            },
+            Side::RIGHT => {
+                scad!(Translate(vec3(self.rows as f32 * self.grid_spacing, 0., 0.)); duplicated)
+            }
+        };
+
+
+        result
     }
 }
 
@@ -126,7 +185,7 @@ impl Keyboard
 fn get_switch_hole() -> ScadObject 
 {
     let inner_height = 1.5;
-    let padding = 0.1;
+    let padding = 0.2;
     let inner_width = 14. + padding * 2.;
 
     let cube = scad!(Cube(vec3(inner_width, inner_width, inner_height)));
@@ -149,7 +208,8 @@ pub fn main()
     sfile.set_detail(50);
 
     //Add the cube object to the file
-    sfile.add_object(Keyboard::new(4, 6).get_main());
+    sfile.add_object(Keyboard::new(3, 3).get_main(Side::LEFT));
+    //sfile.add_object(electronics.teensy_lc());
     //Save the scad code to a file
     sfile.write_to_file(String::from("out.scad"));
 }

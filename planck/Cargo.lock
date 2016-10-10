@@ -4,6 +4,7 @@ version = "0.1.0"
 dependencies = [
  "nalgebra 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "scad_generator 0.1.0 (git+https://github.com/TheZoq2/Rust-Scad.git)",
+ "scad_util 0.1.0 (git+https://github.com/TheZoq2/Rust-scad-util.git)",
 ]
 
 [[package]]
@@ -106,5 +107,14 @@ version = "0.1.0"
 source = "git+https://github.com/TheZoq2/Rust-Scad.git#13ac7faaa2683294c4ad818fea6cbdd4e2796913"
 dependencies = [
  "nalgebra 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "scad_util"
+version = "0.1.0"
+source = "git+https://github.com/TheZoq2/Rust-scad-util.git#0a44673168a4602802cbb8d98e6014beb19834ad"
+dependencies = [
+ "nalgebra 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "scad_generator 0.1.0 (git+https://github.com/TheZoq2/Rust-Scad.git)",
 ]
 

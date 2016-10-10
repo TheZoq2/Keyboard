@@ -192,7 +192,7 @@ ST_MOUNT_HOLE_SIZE = [7,1];
 ST_INTER_DISTANCE = 14;
 ST_START_HEIGHT = 3;
 
-keycap(STD_OUTER_SIZE, STD_INNER_SIZE, roundTop = true, useSupport = true)
+keycap(STD_OUTER_SIZE, STD_INNER_SIZE, roundTop = true, useSupport = false)
 mountingCross(MOUNT_OUTER_SIZE[0], MOUNT_OUTER_SIZE[1], 1.6, MOUNT_OUTER_SIZE[2], useSupport = false)
 cube([0,0,0]);
 

@@ -13,31 +13,50 @@ module = SCAD.Module("switchHoles", []);
 
 currentX = 0;
 currentY = 0;
+currentRowY = 0;
 
 nextWidth = STD_SIZE;
+nextRotation = 0;
 
 for row in jsonLayout:
     if(isinstance(row, dict)):
         continue;
 
     for key in row:
+        #The amount of X/Y added on this key
+        addX = 0
+        addY = 0
 
         if(isinstance(key, str)):
-            transform = SCAD.Translate((currentX + nextWidth / 2, currentY + STD_SIZE / 2, 0));
+            rotation = SCAD.Rotate(nextRotation, (0,0,1));
+            transform = SCAD.Translate((currentX + nextWidth / 2, currentRowY + currentY + STD_SIZE / 2, 0));
             transform.addChild(SCAD.Call("children", [0]))
-            module.addChild(transform)
+
+            rotation.addChild(transform);
+            module.addChild(rotation);
 
             currentX += nextWidth;
             nextWidth = STD_SIZE
         else:
             if("x" in key):
-                currentX += key["x"] * STD_SIZE;
+                addX = key["x"] * STD_SIZE
+                currentX += addX;
+            if("y" in key):
+                addY = key["y"] * STD_SIZE
+                currentY += addY;
 
             if("w" in key):
                 nextWidth = key["w"] * STD_SIZE;
+            
+            #Rotation seems to reset the row locations
+            if("r" in key):
+                nextRotation = key["r"]
+                currentRowY = 0
+                currentX = addX
+                currentY = addY
 
     currentX = 0;
-    currentY += STD_SIZE
+    currentRowY += STD_SIZE
             
 
 print(module.generateCode());
