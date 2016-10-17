@@ -80,14 +80,24 @@ impl Keyboard
         {
             Side::LEFT =>
             {
-                self.usb_mount(Side::LEFT)
+                let tuples = vec!(self.usb_mount(Side::LEFT), self.usb_mount(Side::RIGHT));
+
+                let mut holes = scad!(Union);
+                let mut mounts = scad!(Union);
+
+                for (hole, mount) in tuples
+                {
+                    holes.add_child(hole);
+                    mounts.add_child(mount);
+                }
+
+                (holes, mounts)
             }
             Side::RIGHT =>
             {
                 self.usb_mount(Side::RIGHT)
             }
         };
-
 
         scad!(Difference;{
             scad!(Union;
@@ -111,7 +121,7 @@ impl Keyboard
             Side::RIGHT => self.rows as f32 - 1.,
             Side::LEFT => 1.
         };
-        let usb_offset_y = 1.;
+        let usb_offset_y = 0.;
 
         let usb_port_hole = {
             scad!(Translate(vec3(self.grid_spacing * usb_offset_x, -usb_offset_y, bottom_offset)); usb_breakout.board(10.))
@@ -243,7 +253,7 @@ impl Keyboard
         };
 
 
-        let mut result = match side
+        match side
         {
             Side::RIGHT => {
                 scad!(Translate(vec3(self.rows as f32 * self.grid_spacing, 0., 0.)); duplicated)
@@ -251,10 +261,8 @@ impl Keyboard
             Side::LEFT => {
                 scad!(Translate(vec3(-height, 0., 0.)); duplicated)
             }
-        };
+        }
 
-
-        result
     }
 }
 
@@ -285,7 +293,7 @@ pub fn main()
     sfile.set_detail(50);
 
     //Add the cube object to the file
-    sfile.add_object(Keyboard::new(6, 4).get_main(Side::RIGHT));
+    sfile.add_object(Keyboard::new(6, 4).get_main(Side::LEFT));
     //sfile.add_object(Keyboard::new(3, 3).get_main(Side::LEFT));
     //sfile.add_object(get_usb_port_mount());
     //sfile.add_object(electronics.teensy_lc());
